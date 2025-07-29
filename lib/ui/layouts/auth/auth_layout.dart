@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/ui/layouts/auth/widgets/background_custom.dart';
 import 'package:flutter/material.dart';
 
 class AuthLayout extends StatelessWidget {
@@ -28,7 +29,8 @@ class _DesktopBody extends StatelessWidget {
       color: Colors.red,
       child: Row(
         children: [
-          Expanded(child: Container(color: Colors.blue)),
+          // Background
+          BackgroundCustom(),
           // View Container
           Container(width: 600, height: double.infinity, color: Colors.black),
         ],

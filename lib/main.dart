@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Admin Dashboard',
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
       builder: (_, child) {
