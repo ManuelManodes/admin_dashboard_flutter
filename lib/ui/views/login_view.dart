@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Center(child: Text('Login View')));
+    return Container(
+      color: Colors.red,
+      child: Center(child: Text('Login View')),
+    );
   }
 }
