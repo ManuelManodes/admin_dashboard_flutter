@@ -30,7 +30,9 @@ class _LinkTextState extends State<LinkText> {
             widget.text,
             style: TextStyle(
               fontSize: 16,
-              color: isHover ? Colors.blue : Colors.grey[700],
+              color: isHover
+                  ? Colors.blueGrey
+                  : Colors.grey[700], // ✅ Hover blueGrey
               decoration: isHover
                   ? TextDecoration.underline
                   : TextDecoration.none,
