@@ -1,14 +1,25 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/login_form_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/buttons/link_text.dart';
 import 'package:admin_dashboard/ui/inputs/custom_inputs.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  @override
+  _LoginViewState createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  bool _obscurePassword = true;
+
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context);
+
     return ChangeNotifierProvider(
       create: (_) => LoginFormProvider(),
       child: Builder(
@@ -25,12 +36,20 @@ class LoginView extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 370),
                 child: Form(
+                  autovalidateMode: AutovalidateMode.disabled,
                   key: loginFormProvider.formKey,
                   child: Column(
                     children: [
                       TextFormField(
+                        validator: (value) {
+                          if (!EmailValidator.validate(value ?? '')) {
+                            return 'Email no válido';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) => loginFormProvider.email = value,
                         style: TextStyle(color: Colors.white),
-                        cursorColor: Colors.white, // ✅ Cursor blanco
+                        cursorColor: Colors.white,
                         decoration: CustomInputs.loginInputDecoration(
                           hint: 'Ingrese su correo',
                           label: 'Correo',
@@ -41,30 +60,55 @@ class LoginView extends StatelessWidget {
                       SizedBox(height: 20),
 
                       TextFormField(
+                        onChanged: (value) =>
+                            loginFormProvider.password = value,
                         validator: (value) {
-                          if (value == null || value.isEmpty)
+                          if (value == null || value.isEmpty) {
                             return 'Ingrese su contraseña';
-                          if (value.length < 6)
+                          }
+                          if (value.length < 6) {
                             return 'La contraseña debe tener al menos 6 caracteres';
-
+                          }
                           return null;
                         },
+                        obscureText: _obscurePassword,
                         style: TextStyle(color: Colors.white),
                         cursorColor: Colors.white,
-                        decoration: CustomInputs.loginInputDecoration(
-                          hint: '*********',
-                          label: 'Contraseña',
-                          icon: Icons.lock_outline,
-                        ),
+                        decoration:
+                            CustomInputs.loginInputDecoration(
+                              hint: '*********',
+                              label: 'Contraseña',
+                              icon: Icons.lock_outline,
+                            ).copyWith(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _obscurePassword = !_obscurePassword;
+                                  });
+                                },
+                              ),
+                            ),
                       ),
 
                       SizedBox(height: 20),
                       SizedBox(
-                        width: double
-                            .infinity, // ✅ Fuerza al botón a ocupar todo el ancho
+                        width: double.infinity,
                         child: CustomOutlinedButton(
                           onPressed: () {
-                            loginFormProvider.validateForm();
+                            final isValid = loginFormProvider.validateForm();
+                            if (isValid) {
+                              authProvider.login(
+                                loginFormProvider.email,
+                                loginFormProvider.password,
+                              );
+                              // Proceed with login
+                            }
                           },
                           text: 'Ingresar',
                           color: Colors.blueGrey,
@@ -74,7 +118,7 @@ class LoginView extends StatelessWidget {
 
                       SizedBox(height: 20),
                       LinkText(
-                        text: 'Nueva cuenta',
+                        text: 'Registrar nueva cuenta',
                         onPressed: () {
                           Navigator.pushNamed(
                             context,

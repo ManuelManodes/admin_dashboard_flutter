@@ -17,7 +17,7 @@ class CustomTitle extends StatelessWidget {
           FittedBox(
             fit: BoxFit.contain,
             child: Text(
-              'Sucediendo ahora',
+              'Bienvenido de vuelta',
               style: GoogleFonts.montserratAlternates(
                 fontSize: 60,
                 fontWeight: FontWeight.bold,
