@@ -20,18 +20,47 @@ class Sidebar extends StatelessWidget {
           MenuItem(
             icon: Icons.compass_calibration_outlined,
             text: 'Dashboard',
-            onPressed: () => print('Dashboard pressed'),
+            onPressed: () {},
           ),
-          MenuItem(
-            icon: Icons.settings,
-            text: 'Settings',
-            onPressed: () => print('Settings pressed'),
-          ),
+          MenuItem(icon: Icons.settings, text: 'Settings', onPressed: () {}),
           MenuItem(
             icon: Icons.notifications,
             text: 'Notifications',
-            onPressed: () => print('Notifications pressed'),
+            onPressed: () {},
           ),
+          MenuItem(
+            icon: Icons.shopping_cart_checkout_outlined,
+            text: 'Shop',
+            onPressed: () {},
+          ),
+          MenuItem(icon: Icons.analytics, text: 'Analytics', onPressed: () {}),
+          MenuItem(icon: Icons.category, text: 'Categories', onPressed: () {}),
+
+          SizedBox(height: 30),
+
+          TextSeparator(text: 'UI Elements'),
+
+          MenuItem(
+            icon: Icons.list_alt_outlined,
+            text: 'Icons',
+            onPressed: () {},
+          ),
+          MenuItem(
+            icon: Icons.mark_email_read_outlined,
+            text: 'Marketing',
+            onPressed: () {},
+          ),
+          MenuItem(
+            icon: Icons.note_add_outlined,
+            text: 'Campaigns',
+            onPressed: () {},
+          ),
+          MenuItem(
+            icon: Icons.post_add_outlined,
+            text: 'Black',
+            onPressed: () {},
+          ),
+          MenuItem(icon: Icons.logout, text: 'Logout', onPressed: () {}),
         ],
       ),
     );

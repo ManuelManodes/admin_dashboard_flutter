@@ -4,7 +4,7 @@ class DashboardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Color(0xffEDF1F2),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
