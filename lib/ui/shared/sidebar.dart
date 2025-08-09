@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/ui/shared/widgets/logo.dart';
 import 'package:admin_dashboard/ui/shared/widgets/menu_item.dart';
 import 'package:admin_dashboard/ui/shared/widgets/text_separator.dart';
@@ -20,7 +21,7 @@ class Sidebar extends StatelessWidget {
           MenuItem(
             icon: Icons.compass_calibration_outlined,
             text: 'Dashboard',
-            onPressed: () {},
+            onPressed: () => SideMenuProvider.closeMenu(),
           ),
           MenuItem(icon: Icons.settings, text: 'Settings', onPressed: () {}),
           MenuItem(

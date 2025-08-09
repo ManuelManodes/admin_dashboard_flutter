@@ -9,7 +9,11 @@ class DashboardView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.dashboard, size: 100, color: Colors.blue),
+            Icon(
+              Icons.app_registration_outlined,
+              size: 100,
+              color: Colors.deepOrangeAccent,
+            ),
             SizedBox(height: 20),
             Text(
               '¡Bienvenido al Dashboard!',
