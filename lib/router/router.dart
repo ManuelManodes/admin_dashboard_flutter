@@ -13,6 +13,8 @@ class Flurorouter {
 
   // Dashboard Router
   static String dashboardRoute = '/dashboard';
+  static String iconsRoute = '/dashboard/icons';
+  static String blankRoute = '/dashboard/blank'; // Añadir esta línea
 
   static void configureRoutes() {
     // Auth Routes
@@ -37,6 +39,20 @@ class Flurorouter {
       dashboardRoute,
       handler: AdminHandlers.dashboard,
       transitionType: TransitionType.fadeIn,
+    );
+
+    // Icons Route - Agregar esta sección
+    router.define(
+      iconsRoute,
+      handler: AdminHandlers.icons,
+      transitionType: TransitionType.none,
+    );
+
+    // Blank Route - Añadir esta sección
+    router.define(
+      blankRoute,
+      handler: AdminHandlers.blank,
+      transitionType: TransitionType.none,
     );
 
     // Agregar handler para páginas no encontradas

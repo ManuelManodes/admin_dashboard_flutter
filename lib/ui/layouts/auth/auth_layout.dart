@@ -100,7 +100,7 @@ class _DesktopBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black, // ✅ Cambiar de Colors.red a Colors.black
+      color: Colors.black,
       child: Row(
         children: [
           // Background side

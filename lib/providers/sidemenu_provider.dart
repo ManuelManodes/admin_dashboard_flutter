@@ -1,15 +1,25 @@
 import 'package:flutter/material.dart';
 
-class SideMenuProvider {
+class SideMenuProvider extends ChangeNotifier {
+  // ✅ Agregado extends ChangeNotifier
   static late AnimationController menuController;
   static bool isOpen = false;
 
-  static Animation<double> get movement => menuController.drive(
-    Tween<double>(
-      begin: -250.0, // Ancho negativo del sidebar para ocultarlo
-      end: 0.0, // Posición visible
-    ),
-  );
+  String _currentPage = '';
+
+  String get currentPage {
+    return _currentPage;
+  }
+
+  void setCurrentPageUrl(String routeName) {
+    _currentPage = routeName;
+    Future.delayed(Duration(milliseconds: 100), () {
+      notifyListeners(); // ✅ Ahora funciona correctamente
+    });
+  }
+
+  static Animation<double> get movement =>
+      menuController.drive(Tween<double>(begin: -250.0, end: 0.0));
 
   static Animation<double> opacity = Tween<double>(
     begin: 0,

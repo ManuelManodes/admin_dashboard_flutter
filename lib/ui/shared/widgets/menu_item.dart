@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:admin_dashboard/services/navigation_service.dart';
 
 class MenuItem extends StatefulWidget {
   final IconData icon;
   final String text;
   final bool isActive;
   final Function onPressed;
+  final String? route; // Agregar parámetro opcional para la ruta
 
   const MenuItem({
     Key? key,
@@ -13,6 +15,7 @@ class MenuItem extends StatefulWidget {
     required this.text,
     this.isActive = false,
     required this.onPressed,
+    this.route, // Hacer opcional
   }) : super(key: key);
 
   @override
@@ -34,7 +37,15 @@ class _MenuItemState extends State<MenuItem> {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: widget.isActive ? null : () => widget.onPressed(),
+          onTap: widget.isActive
+              ? null
+              : () {
+                  widget.onPressed();
+                  // Solo navegar si se proporciona una ruta
+                  if (widget.route != null) {
+                    NavigationService.navigateTo(widget.route!);
+                  }
+                },
           splashColor: Colors.white.withValues(alpha: 0.2),
           highlightColor: Colors.white.withValues(alpha: 0.1),
           child: Padding(

@@ -1,4 +1,8 @@
+import 'package:web/web.dart' as web;
+import 'dart:js_interop';
+import 'package:admin_dashboard/api/cafeApi.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
+import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:admin_dashboard/services/navigation_service.dart';
@@ -11,8 +15,40 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.configurePrefs();
+  NavigationService.debugLocalStorage();
+
+  // Detector de cambios en la URL para web
+  _setupUrlChangeListener();
+
   Flurorouter.configureRoutes();
+  CafeApi.configureDio();
   runApp(AppState());
+}
+
+// Función para detectar cambios en la URL y guardarlos
+void _setupUrlChangeListener() {
+  // Captura la URL inicial
+  final location = web.window.location;
+  final path = location.hash.isNotEmpty ? location.hash.substring(1) : '';
+
+  if (path.isNotEmpty && path.startsWith('/dashboard')) {
+    LocalStorage.prefs.setString('lastRoute', path);
+  }
+
+  // Escuchar cambios futuros en la URL
+  web.window.addEventListener(
+    'hashchange',
+    ((web.Event event) {
+      final newLocation = web.window.location;
+      final newPath = newLocation.hash.isNotEmpty
+          ? newLocation.hash.substring(1)
+          : '';
+
+      if (newPath.isNotEmpty && newPath.startsWith('/dashboard')) {
+        LocalStorage.prefs.setString('lastRoute', newPath);
+      }
+    }).toJS,
+  );
 }
 
 class AppState extends StatelessWidget {
@@ -21,6 +57,7 @@ class AppState extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
+        ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
       ],
       child: MyApp(),
     );

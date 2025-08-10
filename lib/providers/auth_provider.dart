@@ -1,6 +1,6 @@
+import 'package:admin_dashboard/services/navigation_service.dart';
 import 'package:admin_dashboard/services/local_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:admin_dashboard/services/navigation_service.dart';
 
 enum AuthStatus { checking, authenticated, unauthenticated }
 
@@ -36,10 +36,12 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> isAuthenticated() async {
     try {
       final token = LocalStorage.prefs.getString('token');
+      print('🔒 Verificando autenticación, token: $token');
 
       if (token == null) {
         authStatus = AuthStatus.unauthenticated;
         notifyListeners();
+        print('❌ No autenticado: token nulo');
         return false;
       }
 
@@ -49,22 +51,32 @@ class AuthProvider extends ChangeNotifier {
       authStatus = AuthStatus.authenticated;
       this._token = token;
       notifyListeners();
+      print('✅ Autenticado con éxito');
 
-      // Si está autenticado, limpiar historial al redirigir
+      // Si está autenticado, redirigir a la última ruta o dashboard
       WidgetsBinding.instance.addPostFrameCallback((_) {
         final currentContext = NavigationService.navigatorKey.currentContext;
         if (currentContext != null) {
           final currentRoute =
               ModalRoute.of(currentContext)?.settings.name ?? '/';
+          print('🌐 Ruta actual: $currentRoute');
 
           if (currentRoute == '/' || currentRoute.startsWith('/auth')) {
-            NavigationService.navigateToAndClear('/dashboard');
+            // DEBUG: Verificar LocalStorage antes de decidir
+            NavigationService.debugLocalStorage();
+
+            // Usar la última ruta guardada o dashboard por defecto
+            final lastRoute = NavigationService.getLastRoute();
+            final targetRoute = lastRoute ?? '/dashboard';
+            print('🚀 Redirigiendo a: $targetRoute');
+            NavigationService.navigateToAndClear(targetRoute);
           }
         }
       });
 
       return true;
     } catch (e) {
+      print('❌ Error de autenticación: $e');
       authStatus = AuthStatus.unauthenticated;
       notifyListeners();
       return false;
@@ -72,16 +84,14 @@ class AuthProvider extends ChangeNotifier {
   }
 
   void logout() {
-    // Primero cambiar el estado
+    this._token = null;
+    this.authStatus = AuthStatus.unauthenticated;
     LocalStorage.prefs.remove('token');
-    _token = null;
-    authStatus = AuthStatus.unauthenticated;
-    notifyListeners();
 
-    // Luego navegar después de un frame y limpiar historial
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      NavigationService.navigateToAndClear('/auth/login');
-    });
+    // Limpiar la última ruta guardada
+    NavigationService.clearLastRoute();
+
+    notifyListeners();
   }
 
   String? get token => _token;
