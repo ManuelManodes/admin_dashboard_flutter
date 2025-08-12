@@ -3,6 +3,7 @@ import 'package:admin_dashboard/providers/login_form_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
 import 'package:admin_dashboard/ui/buttons/link_text.dart';
+import 'package:admin_dashboard/ui/buttons/google_signin_button.dart';
 import 'package:admin_dashboard/ui/inputs/custom_inputs.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
@@ -114,6 +115,34 @@ class _LoginViewState extends State<LoginView> {
                           color: Colors.blueGrey,
                           isFilled: true,
                         ),
+                      ),
+
+                      SizedBox(height: 20),
+
+                      // Separador
+                      Row(
+                        children: [
+                          Expanded(child: Divider(color: Colors.grey)),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'O',
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ),
+                          Expanded(child: Divider(color: Colors.grey)),
+                        ],
+                      ),
+
+                      SizedBox(height: 20),
+
+                      // Botón de Google Sign-In
+                      GoogleSignInButton(
+                        onPressed: () async {
+                          await authProvider.signInWithGoogle();
+                        },
+                        isLoading:
+                            authProvider.authStatus == AuthStatus.checking,
                       ),
 
                       SizedBox(height: 20),

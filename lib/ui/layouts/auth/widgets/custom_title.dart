@@ -14,15 +14,15 @@ class CustomTitle extends StatelessWidget {
 
           SizedBox(height: 20),
 
-          FittedBox(
-            fit: BoxFit.contain,
-            child: Text(
-              'Bienvenido de vuelta',
-              style: GoogleFonts.montserratAlternates(
-                fontSize: 60,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+          Text(
+            'Bienvenido de vuelta',
+            style: GoogleFonts.montserratAlternates(
+              fontSize: (MediaQuery.of(context).size.width * 0.05).clamp(
+                30.0,
+                70.0,
               ),
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
         ],

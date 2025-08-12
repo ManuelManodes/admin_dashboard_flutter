@@ -34,7 +34,9 @@ dependencies:
   fluro: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   google_fonts: ^6.2.1
+  google_sign_in: ^6.2.1
   provider: ^6.1.5
   shared_preferences: ^2.5.3
   web: ^1.1.0

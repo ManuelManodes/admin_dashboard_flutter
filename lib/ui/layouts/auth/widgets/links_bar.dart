@@ -2,14 +2,14 @@ import 'package:admin_dashboard/ui/buttons/link_text.dart';
 import 'package:flutter/material.dart';
 
 class LinksBar extends StatelessWidget {
+  const LinksBar({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
     return Container(
       color: Colors.black,
       width: double.infinity, // Siempre ocupa todo el ancho
-      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
       child: Center(
         child: Wrap(
           alignment: WrapAlignment.center,

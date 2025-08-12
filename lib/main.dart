@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:web/web.dart' as web;
 import 'dart:js_interop';
 import 'package:admin_dashboard/api/cafeApi.dart';
@@ -56,7 +57,7 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(lazy: false, create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
       ],
       child: MyApp(),
@@ -73,6 +74,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       onGenerateRoute: Flurorouter.router.generator,
       navigatorKey: NavigationService.navigatorKey,
+      scaffoldMessengerKey: NotificationsService.scaffoldMessengerKey,
       builder: (_, child) {
         final authProvider = Provider.of<AuthProvider>(context);
 

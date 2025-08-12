@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 class BackgroundCustom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
+      // Cambiar Expanded por Container
+      decoration: buildBoxDecoration(),
       child: Container(
-        decoration: buildBoxDecoration(),
-        child: Container(
-          constraints: BoxConstraints(maxWidth: 400),
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Image(
-                image: AssetImage('twitter-white-logo.png'),
-                width: 400,
-              ),
+        constraints: BoxConstraints(maxWidth: 400),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Image(
+              image: AssetImage('twitter-white-logo.png'),
+              width: 400,
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/register_form_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
 import 'package:admin_dashboard/ui/buttons/custom_outlined_button.dart';
@@ -14,6 +15,50 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  Future<void> _handleRegister(
+    RegisterFormProvider registerFormProvider,
+  ) async {
+    final validForm = registerFormProvider.validateForm();
+    if (!validForm) return;
+
+    // Prevenir múltiples ejecuciones
+    if (_isLoading) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+      print('🔄 Iniciando registro...');
+
+      final success = await authProvider.register(
+        registerFormProvider.email,
+        registerFormProvider.password,
+        registerFormProvider.name,
+      );
+
+      print('📋 Resultado del registro: $success');
+
+      // Si el registro falló, resetear el estado
+      if (!success && mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+      // Si fue exitoso, el AuthProvider maneja la navegación
+    } catch (e) {
+      print('❌ Error en _handleRegister: $e');
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +71,8 @@ class _RegisterViewState extends State<RegisterView> {
             listen: false,
           );
           return Container(
-            margin: EdgeInsets.only(top: 100),
+            margin: EdgeInsets.only(top: 50), // Reducir margen
             padding: EdgeInsets.symmetric(horizontal: 20),
-            color: Colors.black,
             child: Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 370),
@@ -36,6 +80,7 @@ class _RegisterViewState extends State<RegisterView> {
                   autovalidateMode: AutovalidateMode.disabled,
                   key: registerFormProvider.formKey,
                   child: Column(
+                    mainAxisSize: MainAxisSize.min, // Agregar esto
                     children: [
                       TextFormField(
                         onChanged: (value) => registerFormProvider.name = value,
@@ -112,11 +157,15 @@ class _RegisterViewState extends State<RegisterView> {
                       SizedBox(
                         width: double.infinity,
                         child: CustomOutlinedButton(
-                          onPressed: () {
-                            registerFormProvider.validateForm();
+                          onPressed: () async {
+                            // Verificar si ya está cargando antes de proceder
+                            if (_isLoading) return;
+
+                            await _handleRegister(registerFormProvider);
                           },
-                          text: 'Crear cuenta',
-                          // Usa los parámetros correctos según la definición del widget
+                          text: _isLoading
+                              ? 'Creando cuenta...'
+                              : 'Crear cuenta',
                           color: Colors.grey,
                           isFilled: true,
                         ),

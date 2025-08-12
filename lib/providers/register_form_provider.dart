@@ -10,9 +10,11 @@ class RegisterFormProvider extends ChangeNotifier {
   validateForm() {
     if (formKey.currentState!.validate()) {
       print('Formulario válido... register    ');
-      print('$email' == '$password' && '$name' == '$email');
+      print('$email === $password === $name');
+      return true;
     } else {
       print('Formulario inválido... ');
+      return false;
     }
   }
 }

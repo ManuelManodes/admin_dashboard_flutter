@@ -37,54 +37,32 @@ class _MobileBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      child: Scrollbar(
-        thumbVisibility: true, // Siempre visible
-        trackVisibility: true, // Track visible
-        thickness: 8.0, // Grosor del scrollbar
-        radius: Radius.circular(10.0), // Bordes redondeados
-        scrollbarOrientation: ScrollbarOrientation.right,
-        child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight:
-                  MediaQuery.of(context).size.height -
-                  100, // Altura mínima menos el footer
-            ),
-            child: IntrinsicHeight(
-              child: Column(
-                children: [
-                  // Título fijo en la parte superior
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: CustomTitle(),
-                  ),
-                  SizedBox(height: 20),
-
-                  // Contenido principal (Login View) - MÁS ESPACIO
-                  Expanded(
-                    flex: 3, // Más proporción para el login
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: child,
-                    ),
-                  ),
-
-                  SizedBox(height: 20), // Menos espacio
-                  // Imagen de fondo y logo - MENOS ESPACIO
-                  Expanded(
-                    flex: 2, // Menos proporción para la imagen
-                    child: Container(
-                      width: double.infinity,
-                      height: 200, // Altura reducida
-                      child: BackgroundCustom(),
-                    ),
-                  ),
-
-                  SizedBox(height: 10), // Espacio mínimo antes del footer
-                ],
+      child: SingleChildScrollView(
+        // Remover Scrollbar para evitar errores
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height - 100,
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: CustomTitle(),
               ),
-            ),
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: child,
+              ),
+              SizedBox(height: 20),
+              Container(
+                width: double.infinity,
+                height: 200,
+                child: BackgroundCustom(),
+              ),
+              SizedBox(height: 10),
+            ],
           ),
         ),
       ),
@@ -108,13 +86,31 @@ class _DesktopBody extends StatelessWidget {
           // Content side
           Container(
             width: 600,
-            color: Colors.black,
-            child: Column(
-              children: [
-                CustomTitle(),
-                SizedBox(height: 50),
-                Expanded(child: child),
-              ],
+            child: Container(
+              color: Colors.black,
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height,
+                  ),
+                  child: Column(
+                    children: [
+                      // Agregar CustomTitle aquí
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: CustomTitle(),
+                      ),
+                      SizedBox(height: 40),
+                      // Contenido del formulario
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 370),
+                        child: child,
+                      ),
+                      SizedBox(height: 40),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         ],
