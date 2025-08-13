@@ -75,9 +75,43 @@ RouteGuard.requireGuest(LoginView())
 ### Prerrequisitos
 - Flutter SDK (>=3.0.0)
 - Dart SDK (>=2.17.0)
+- Node.js (>=16.0.0) para el backend
+- MongoDB
 - Navegador web moderno
 
 ### Instalación
+
+#### 1. 🔧 Configurar Backend (Primero)
+```bash
+# Ejecutar script de configuración automática
+./setup_backend.sh
+
+# O manualmente:
+cd backend
+npm install
+npm run dev
+```
+
+#### 2. 📱 Configurar Flutter App
+```bash
+# Instalar dependencias de Flutter
+flutter pub get
+
+# Ejecutar en desarrollo
+flutter run -d chrome
+
+# O compilar para web
+flutter build web
+```
+
+### 🚀 Inicio Rápido
+```bash
+# Terminal 1 - Backend
+./setup_backend.sh
+
+# Terminal 2 - Flutter App
+flutter run -d chrome
+```
 
 1. **Clona el repositorio**
 ```bash
@@ -294,6 +328,37 @@ authStatus = AuthStatus.authenticated;
 this._token = token; // ← Importante asignar el token recuperado
 ```
 
+### ❌ Error: "Credenciales incorrectas" o "Error de conexión"
+**Causa**: Backend no está corriendo o MongoDB no conectado
+```bash
+# ✅ Solución: Verificar que el backend esté corriendo
+./setup_backend.sh
+
+# Y que MongoDB esté activo
+brew services start mongodb/brew/mongodb-community
+```
+
+## 🗄️ Backend y Base de Datos
+
+### Estructura del Backend
+```
+backend/
+├── controllers/authController.js  # Lógica de autenticación
+├── models/Usuario.js             # Esquema MongoDB
+├── routes/auth.js               # Endpoints API
+└── server.js                   # Servidor Express
+```
+
+### Endpoints Principales
+- `POST /api/auth/login` - Iniciar sesión
+- `POST /api/usuarios` - Registrar usuario
+- `GET /api/auth/renew` - Renovar token JWT
+
+### Base de Datos MongoDB
+- **Colección**: `usuarios`
+- **Encriptación**: bcryptjs para contraseñas
+- **Tokens**: JWT con expiración de 24h
+
 ## 📈 Mejores Prácticas Implementadas
 
 - ✅ **Single Source of Truth**: AuthProvider maneja todo el estado de autenticación
@@ -308,9 +373,24 @@ this._token = token; // ← Importante asignar el token recuperado
 - [ ] Implementar sidebar con navegación en DashboardLayout
 - [ ] Agregar navbar con perfil de usuario y logout
 - [ ] Crear más vistas del dashboard (usuarios, reportes, etc.)
-- [ ] Implementar validación real de JWT con backend
+- [x] **Implementar validación real de JWT con backend MongoDB** ✅
 - [ ] Agregar manejo de roles y permisos
 - [ ] Implementar refresh tokens
+- [ ] Configurar backend para producción
+
+## 🎯 Solución Implementada: Autenticación Real
+
+### ✅ **Problema Resuelto**
+- El login ahora **verifica credenciales reales** contra MongoDB
+- Reemplazado el "dummy token" por **JWT válidos**
+- Implementado **hash de contraseñas** con bcryptjs
+- Agregado **manejo de errores específicos**
+
+### 🔧 **Cambios Realizados**
+1. **Backend completo** con Node.js + Express + MongoDB
+2. **AuthProvider actualizado** para usar API real
+3. **Validación de credenciales** antes de autenticar
+4. **Mensajes de error específicos** (usuario no encontrado, contraseña incorrecta, etc.)
 
 ## 📄 Licencia
 

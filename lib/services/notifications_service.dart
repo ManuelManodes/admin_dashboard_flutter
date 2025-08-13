@@ -21,14 +21,11 @@ class NotificationsService {
             retryScaffold.showSnackBar(
               SnackBar(content: Text(message), duration: Duration(seconds: 3)),
             );
-          } else {
-            print('📢 Notification (console): $message');
           }
         });
       }
     } catch (e) {
-      print('📢 Notification error, showing in console: $message');
-      print('Error: $e');
+      // Error handling silencioso - no mostrar en consola
     }
   }
 }

@@ -33,15 +33,11 @@ class _RegisterViewState extends State<RegisterView> {
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
 
-      print('🔄 Iniciando registro...');
-
       final success = await authProvider.register(
         registerFormProvider.email,
         registerFormProvider.password,
         registerFormProvider.name,
       );
-
-      print('📋 Resultado del registro: $success');
 
       // Si el registro falló, resetear el estado
       if (!success && mounted) {
@@ -51,7 +47,6 @@ class _RegisterViewState extends State<RegisterView> {
       }
       // Si fue exitoso, el AuthProvider maneja la navegación
     } catch (e) {
-      print('❌ Error en _handleRegister: $e');
       if (mounted) {
         setState(() {
           _isLoading = false;

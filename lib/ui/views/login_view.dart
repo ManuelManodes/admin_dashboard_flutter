@@ -139,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
                       // Botón de Google Sign-In
                       GoogleSignInButton(
                         onPressed: () async {
-                          await authProvider.signInWithGoogle();
+                          await authProvider.loginWithGoogle();
                         },
                         isLoading:
                             authProvider.authStatus == AuthStatus.checking,

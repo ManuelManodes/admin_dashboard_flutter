@@ -1,7 +1,6 @@
 import 'package:admin_dashboard/services/notifications_service.dart';
 import 'package:web/web.dart' as web;
 import 'dart:js_interop';
-import 'package:admin_dashboard/api/cafeApi.dart';
 import 'package:admin_dashboard/providers/auth_provider.dart';
 import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/router/router.dart';
@@ -12,9 +11,15 @@ import 'package:admin_dashboard/ui/layouts/dashboard/dashboard_layout.dart';
 import 'package:admin_dashboard/ui/layouts/splash/splash_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Inicializar Firebase
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await LocalStorage.configurePrefs();
   NavigationService.debugLocalStorage();
 
@@ -22,7 +27,6 @@ void main() async {
   _setupUrlChangeListener();
 
   Flurorouter.configureRoutes();
-  CafeApi.configureDio();
   runApp(AppState());
 }
 
@@ -53,6 +57,8 @@ void _setupUrlChangeListener() {
 }
 
 class AppState extends StatelessWidget {
+  const AppState({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -60,12 +66,14 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(lazy: false, create: (_) => SideMenuProvider()),
       ],
-      child: MyApp(),
+      child: const MyApp(),
     );
   }
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -8,11 +8,8 @@ class LoginFormProvider extends ChangeNotifier {
 
   bool validateForm() {
     if (formKey.currentState!.validate()) {
-      //print('Formulario válido... login');
-      //print('$email' == '$password');
       return true;
     } else {
-      //print('Formulario inválido... ');
       return false;
     }
   }
