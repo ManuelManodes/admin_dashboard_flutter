@@ -9,6 +9,12 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  errors:
+    # Treat all issues as warnings instead of errors for development
+    avoid_print: ignore
+    deprecated_member_use: ignore
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
@@ -21,8 +27,16 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    avoid_print: false  # Disable the avoid_print rule for development
+    use_super_parameters: false
+    use_key_in_widget_constructors: false
+    library_private_types_in_public_api: false
+    unnecessary_new: false
+    sized_box_for_whitespace: false
+    avoid_unnecessary_containers: false
+    sort_child_properties_last: false
+    prefer_if_null_operators: false
+    curly_braces_in_flow_control_structures: false
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options

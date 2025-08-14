@@ -4,6 +4,7 @@ import 'package:admin_dashboard/ui/views/register_view.dart';
 import 'package:admin_dashboard/ui/views/dashboard_view.dart';
 import 'package:admin_dashboard/ui/views/icons_view.dart';
 import 'package:admin_dashboard/ui/views/blank_view.dart'; // Añadir esta línea
+import 'package:admin_dashboard/ui/views/scheduling_view.dart';
 import 'package:admin_dashboard/router/route_guard.dart';
 import 'package:admin_dashboard/router/router.dart'; // Asegúrate de importar el router
 import 'package:fluro/fluro.dart';
@@ -62,6 +63,18 @@ class AdminHandlers {
         ).setCurrentPageUrl(Flurorouter.blankRoute);
       }
       return RouteGuard.requireAuth(BlankView());
+    },
+  );
+
+  static Handler scheduling = Handler(
+    handlerFunc: (context, params) {
+      if (context != null) {
+        Provider.of<SideMenuProvider>(
+          context,
+          listen: false,
+        ).setCurrentPageUrl(Flurorouter.schedulingRoute);
+      }
+      return RouteGuard.requireAuth(SchedulingView());
     },
   );
 }

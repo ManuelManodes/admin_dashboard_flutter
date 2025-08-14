@@ -58,6 +58,13 @@ class Sidebar extends StatelessWidget {
             text: 'Categories',
             onPressed: () => {},
           ),
+          MenuItem(
+            isActive:
+                sideMenuProvider.currentPage == Flurorouter.schedulingRoute,
+            icon: Icons.calendar_today,
+            text: 'Agendamiento',
+            onPressed: () => navigateTo(Flurorouter.schedulingRoute),
+          ),
 
           SizedBox(height: 30),
 

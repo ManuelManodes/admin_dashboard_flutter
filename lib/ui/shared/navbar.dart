@@ -2,12 +2,13 @@ import 'package:admin_dashboard/providers/sidemenu_provider.dart';
 import 'package:admin_dashboard/ui/layouts/auth/widgets/search_text.dart';
 import 'package:admin_dashboard/ui/shared/widgets/navbar_avatar.dart';
 import 'package:admin_dashboard/ui/shared/widgets/notifications_indicator.dart';
+import 'package:admin_dashboard/ui/shared/responsive_utils.dart';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    final screenWidth = ResponsiveUtils.getScreenWidth(context);
 
     return Container(
       width: double.infinity,
@@ -15,7 +16,7 @@ class NavBar extends StatelessWidget {
       decoration: buildBoxDecoration(),
       child: Row(
         children: [
-          if (size.width <= 700)
+          if (screenWidth <= 700)
             IconButton(
               onPressed: () => SideMenuProvider.openMenu(),
               icon: Icon(Icons.menu_sharp),
@@ -30,7 +31,7 @@ class NavBar extends StatelessWidget {
             ),
           SizedBox(width: 5),
 
-          if (size.width > 390)
+          if (screenWidth > 390)
             ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 250),
               child: SearchText(),
