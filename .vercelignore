@@ -1,7 +1,18 @@
 # Ignore everything except build/web
-*
-!build/
-!build/web/
-!build/web/**
-!vercel.json
+.dart_tool/
+.idea/
+.vscode/
+.metadata
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+android/
+ios/
+linux/
+macos/
+windows/
+test/
+docs/
+*.md
 !README.md
+!vercel.json
