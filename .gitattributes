@@ -1,0 +1,8 @@
+*.dart linguist-language=Dart
+build/* linguist-generated=true
+*.js linguist-generated=true
+*.map linguist-generated=true
+web/main.dart.js linguist-generated=true
+web/flutter_bootstrap.js linguist-generated=true
+web/flutter.js linguist-generated=true
+web/flutter_service_worker.js linguist-generated=true
