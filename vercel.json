@@ -1,11 +1,21 @@
 {
+  "version": 2,
+  "public": true,
   "builds": [
     {
-      "src": "build/web/**",
+      "src": "*.{html,js,css,png,jpg,jpeg,gif,svg,ico,woff,woff2,ttf,eot,json,wasm,dat}",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "{assets,canvaskit,icons}/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|json|wasm|dat))",
+      "dest": "/$1"
+    },
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
@@ -17,10 +27,6 @@
     {
       "src": "/icons/(.*)",
       "dest": "/icons/$1"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|json|wasm|dat))",
-      "dest": "/$1"
     },
     {
       "src": "/(.*)",
