@@ -1,0 +1,10 @@
+{
+  "name": "admin-dashboard-flutter",
+  "version": "1.0.0",
+  "description": "Flutter Admin Dashboard",
+  "scripts": {
+    "build": "flutter build web --release"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
